@@ -10,6 +10,6 @@ vault2env CICD/repo/zelos-bootstrap/live/kube-secret .env
 source .env
 
 rm admin.live.conf
-echo "$admin_conf" | base64 --decode >> admin.live.conf
+echo "$admin_conf" | base64 --decode > admin.live.conf
 
 rm .env

@@ -13,7 +13,13 @@ module "zelos_system_service_traefik" {
 module "zelos_system_service_longhorn" {
   source = "./modules/kubernetes-system-longhorn"
   depends_on = [
-    module.zelos_system_service_cert_manager,
+    module.zelos_system_service_traefik
+  ]
+}
+
+module "zelos_system_service_monitoring" {
+  source = "./modules/kubernetes-system-monitoring"
+  depends_on = [
     module.zelos_system_service_traefik
   ]
 }

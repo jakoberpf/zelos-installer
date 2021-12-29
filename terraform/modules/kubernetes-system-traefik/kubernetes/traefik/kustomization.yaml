@@ -1,6 +1,0 @@
-namespace: traefik-system
-resources:
-  - namespace.yaml
-  - helm.yaml
-  - ingressroute.yaml
-  - middlewares-secure-headers.yaml

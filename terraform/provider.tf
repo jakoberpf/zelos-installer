@@ -45,16 +45,16 @@ provider "flux" {}
 provider "kubectl" {}
 
 provider "kustomization" {
-  kubeconfig_path = "${path.module}/.kube/admin.${var.stage}.conf"
+  kubeconfig_path = "${path.root}/../.kube/admin.${var.stage}.conf"
 }
 
 provider "kubernetes" {
-  config_path = "${path.module}/.kube/admin.${var.stage}.conf"
+  config_path = "${path.root}/../.kube/admin.${var.stage}.conf"
 }
 
 provider "helm" {
   kubernetes {
-    config_path = "${path.module}/.kube/admin.${var.stage}.conf"
+    config_path = "${path.root}/../.kube/admin.${var.stage}.conf"
   }
 }
 

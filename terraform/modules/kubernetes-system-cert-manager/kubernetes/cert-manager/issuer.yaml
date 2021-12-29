@@ -1,0 +1,47 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: cloudflare-letsencrypt-staging
+  namespace: cert-manager
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: content@jakoberpf.de
+    privateKeySecretRef:
+      # Secret resource used to store the account's private key.
+      name: cloudflare-staging-issuer
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    solvers:
+    - dns01:
+        cloudflare: # https://cert-manager.io/docs/configuration/acme/dns01/cloudflare/
+          apiTokenSecretRef:
+            key: token
+            name: cloudflare-api-credentials
+          email: accounts@jakoberpf.de
+
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: cloudflare-letsencrypt-prod
+  namespace: cert-manager
+spec:
+  acme:
+    # You must replace this email address with your own.
+    # Let's Encrypt will use this to contact you about expiring
+    # certificates, and issues related to your account.
+    email: content@jakoberpf.de
+    privateKeySecretRef:
+      # Secret resource used to store the account's private key.
+      name: cloudflare-prod-issuer-account-key
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - dns01:
+        cloudflare: # https://cert-manager.io/docs/configuration/acme/dns01/cloudflare/
+          apiTokenSecretRef:
+            key: token
+            name: cloudflare-api-credentials
+          email: accounts@jakoberpf.de

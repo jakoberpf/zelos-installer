@@ -10,12 +10,10 @@ module "zelos_system_service_traefik" {
   ]
 }
 
-# module "zelos_system_service_longhorn" {
-#   source = "${path.module}/modules/kubernetes-system-longhorn"
-#   depends_on = [
-#     module.zelos_system_service_traefik
-#   ]
-#   providers = {
-#     kubernetes = kubernetes
-#   }
-# }
+module "zelos_system_service_longhorn" {
+  source = "./modules/kubernetes-system-longhorn"
+  depends_on = [
+    module.zelos_system_service_cert_manager,
+    module.zelos_system_service_traefik
+  ]
+}

@@ -1,33 +1,21 @@
 module "zelos_system_service_cert_manager" {
-  source = "${path.module}/modules/kubernetes-system-cert-manager"
-  providers = {
-    kubernetes = kubernetes
-  }
-}
-
-module "zelos_system_service_metallb" {
-  source = "${path.module}/modules/kubernetes-system-longhorn"
-  providers = {
-    kubernetes = kubernetes
-  }
+  source = "./modules/kubernetes-system-cert-manager"
+  cloudflare_tokens = var.cloudflare_tokens
 }
 
 module "zelos_system_service_traefik" {
-  source = "${path.module}/modules/kubernetes-system-traefik"
+  source = "./modules/kubernetes-system-traefik"
   depends_on = [
-    module.zelos_system_service_metallb
+    module.zelos_system_service_cert_manager
   ]
-  providers = {
-    kubernetes = kubernetes
-  }
 }
 
-module "zelos_system_service_longhorn" {
-  source = "${path.module}/modules/kubernetes-system-longhorn"
-  depends_on = [
-    module.zelos_system_service_traefik
-  ]
-  providers = {
-    kubernetes = kubernetes
-  }
-}
+# module "zelos_system_service_longhorn" {
+#   source = "${path.module}/modules/kubernetes-system-longhorn"
+#   depends_on = [
+#     module.zelos_system_service_traefik
+#   ]
+#   providers = {
+#     kubernetes = kubernetes
+#   }
+# }

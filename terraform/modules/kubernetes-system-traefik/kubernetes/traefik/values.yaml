@@ -1,0 +1,20 @@
+additionalArguments:
+  - --api
+  - --api.insecure=true
+  - --providers.kubernetesIngress.ingressClass=traefik-cert-manager
+providers:
+  kubernetesCRD:
+    enabled: true
+  kubernetesIngress:
+    enabled: true
+ports:
+  web:
+    port: 80
+    redirectTo: websecure
+  websecure:
+    port: 443
+ingressRoute:
+  dashboard:
+    enabled: true
+service:
+  type: NodePort

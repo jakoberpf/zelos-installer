@@ -22,13 +22,14 @@ resource "helm_release" "monitoring" {
   ]
 }
 
-resource "kubectl_manifest" "monitoring" {
+resource "kubectl_manifest" "ingressroute" {
   yaml_body  = <<-EOF
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: grafana
+  namespace: monitoring-system
 spec:
   entryPoints:
     - websecure
@@ -36,16 +37,27 @@ spec:
     - match: Host(`grafana.zelos.k8s.infra.erpf.de`) # Hostname to match
       kind: Rule
       services: # Service to redirect requests to
-        - name: monitoring-grafana
+        - name: kube-prometheus-stack-grafana
           port: 80
   tls:
     secretName: grafana-erpf-de-tls
-    
+  EOF
+
+  depends_on = [
+    kubernetes_namespace.monitoring,
+    helm_release.monitoring,
+    kubectl_manifest.certificate
+  ]
+}
+
+resource "kubectl_manifest" "certificate" {
+  yaml_body  = <<-EOF
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: grafana-erpf-de-tls
+  namespace: monitoring-system
 spec:
   secretName: grafana-erpf-de-tls
   issuerRef:

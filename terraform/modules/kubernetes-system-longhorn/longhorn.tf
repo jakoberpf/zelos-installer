@@ -24,7 +24,7 @@ resource "helm_release" "longhorn" {
   ]
 }
 
-resource "kubectl_manifest" "longhorn" {
+resource "kubectl_manifest" "ingressroute" {
   yaml_body  = <<-EOF
 ---
 apiVersion: traefik.containo.us/v1alpha1
@@ -41,11 +41,19 @@ spec:
       services: # Service to redirect requests to
         - name: longhorn-frontend
           port: 80
-      # middlewares:
-      #   - name: longhorn-basic-auth
   tls:
     secretName: longhorn-erpf-de-tls
-    
+  EOF
+
+  depends_on = [
+    kubernetes_namespace.longhorn,
+    helm_release.longhorn,
+    kubectl_manifest.certificate
+  ]
+}
+
+resource "kubectl_manifest" "certificate" {
+  yaml_body  = <<-EOF
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate

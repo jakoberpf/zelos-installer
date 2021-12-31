@@ -1,5 +1,5 @@
 module "zelos_system_service_cert_manager" {
-  source = "./modules/kubernetes-system-cert-manager"
+  source            = "./modules/kubernetes-system-cert-manager"
   cloudflare_tokens = var.cloudflare_tokens
 }
 
@@ -30,9 +30,9 @@ module "zelos_system_service_flux" {
     module.zelos_system_service_traefik,
     module.zelos_system_service_longhorn
   ]
-  github_owner = var.github_owner
-  github_token = var.github_token
+  github_owner    = var.github_owner
+  github_token    = var.github_token
   repository_name = var.repository_name
-  branch = var.branch
-  stage = var.stage
+  branch          = var.branch
+  stage           = var.stage
 }

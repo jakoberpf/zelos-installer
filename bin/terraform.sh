@@ -6,4 +6,5 @@ cd $GIT_ROOT
 cd $GIT_ROOT/terraform
 terraform init -upgrade
 terraform apply -var-file="variables.tfvars"
+# tf apply -var-file="variables.tfvars" -target=module.zelos_system_service_longhorn
 cd $GIT_ROOT

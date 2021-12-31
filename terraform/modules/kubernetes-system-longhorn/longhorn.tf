@@ -16,7 +16,7 @@ resource "helm_release" "longhorn" {
   name       = "longhorn"
   repository = "https://charts.longhorn.io"
   chart      = "longhorn"
-  version    = "1.2.2"
+  version    = "1.2.3"
   namespace  = "longhorn-system"
 
   depends_on = [
@@ -25,7 +25,7 @@ resource "helm_release" "longhorn" {
 }
 
 resource "kubectl_manifest" "ingressroute" {
-  yaml_body  = <<-EOF
+  yaml_body = <<-EOF
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
@@ -53,7 +53,7 @@ spec:
 }
 
 resource "kubectl_manifest" "certificate" {
-  yaml_body  = <<-EOF
+  yaml_body = <<-EOF
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate

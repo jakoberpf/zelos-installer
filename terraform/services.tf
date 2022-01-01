@@ -36,3 +36,11 @@ module "zelos_system_service_flux" {
   branch          = var.branch
   stage           = var.stage
 }
+
+# module "zelos_system_service_argocd" {
+#   source = "./modules/kubernetes-system-argocd"
+#   depends_on = [
+#     module.zelos_system_service_traefik,
+#     module.zelos_system_service_longhorn
+#   ]
+# }

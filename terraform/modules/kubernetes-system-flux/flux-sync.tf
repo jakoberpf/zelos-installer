@@ -8,18 +8,11 @@ data "kubectl_file_documents" "sync" {
   content = data.flux_sync.main.content
 }
 
-locals {
-  sync = [for v in data.kubectl_file_documents.sync.documents : {
-    data : yamldecode(v)
-    content : v
-    }
-  ]
-}
-
+# Apply manifests on the cluster
 resource "kubectl_manifest" "sync" {
-  for_each = { for v in local.sync : lower(join("/", compact([v.data.apiVersion, v.data.kind, lookup(v.data.metadata, "namespace", ""), v.data.metadata.name]))) => v.content }
   depends_on = [
-    kubernetes_namespace.flux_system
+    kubectl_manifest.apply
   ]
+  for_each  = data.kubectl_file_documents.sync.manifests
   yaml_body = each.value
 }

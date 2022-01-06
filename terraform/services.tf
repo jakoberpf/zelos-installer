@@ -24,18 +24,18 @@ module "zelos_system_service_monitoring" {
   ]
 }
 
-module "zelos_system_service_flux" {
-  source = "./modules/kubernetes-system-flux"
-  depends_on = [
-    module.zelos_system_service_traefik,
-    module.zelos_system_service_longhorn
-  ]
-  github_owner    = var.github_owner
-  github_token    = var.github_token
-  repository_name = var.repository_name
-  branch          = var.branch
-  stage           = var.stage
-}
+# module "zelos_system_service_flux" {
+#   source = "./modules/kubernetes-system-flux"
+#   depends_on = [
+#     module.zelos_system_service_traefik,
+#     module.zelos_system_service_longhorn
+#   ]
+#   github_owner    = var.github_owner
+#   github_token    = var.github_token
+#   repository_name = var.repository_name
+#   branch          = var.branch
+#   stage           = var.stage
+# }
 
 # module "zelos_system_service_argocd" {
 #   source = "./modules/kubernetes-system-argocd"

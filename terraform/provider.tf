@@ -1,5 +1,4 @@
 terraform {
-  required_version = ">= 0.13"
   backend "s3" {
     bucket         = "hashicorp-terraform-backend"
     key            = "jakoberpf/zelos-installer/live/terraform.tfstate"
@@ -11,31 +10,24 @@ terraform {
   required_providers {
     github = {
       source  = "integrations/github"
-      version = ">= 4.9.3"
     }
     kubernetes = {
       source  = "hashicorp/kubernetes"
-      version = ">= 2.0.2"
     }
     kubectl = {
       source  = "gavinbunney/kubectl"
-      version = ">= 1.10.0"
     }
     kustomization = {
       source  = "kbst/kustomization"
-      version = "0.7.0"
     }
     helm = {
       source  = "hashicorp/helm"
-      version = ">= 2.4.1"
     }
     flux = {
       source  = "fluxcd/flux"
-      version = ">= 0.8.1"
     }
     tls = {
       source  = "hashicorp/tls"
-      version = "3.1.0"
     }
   }
 }

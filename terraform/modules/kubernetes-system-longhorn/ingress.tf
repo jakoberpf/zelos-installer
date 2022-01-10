@@ -13,7 +13,7 @@ spec:
     - match: Host(`longhorn.zelos.k8s.infra.erpf.de`) # Hostname to match
       kind: Rule
       services: # Service to redirect requests to
-        - name: longhorn-frontend
+        - name: longhorn-gatekeeper
           port: 80
   tls:
     secretName: longhorn-erpf-de-tls

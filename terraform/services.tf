@@ -15,6 +15,11 @@ module "zelos_system_service_longhorn" {
   depends_on = [
     module.zelos_system_service_traefik
   ]
+  gatekeeper_client_id       = var.longhorn_gatekeeper_client_id
+  gatekeeper_client_secret   = var.longhorn_gatekeeper_client_secret
+  gatekeeper_encryption_key  = var.longhorn_gatekeeper_encryption_key
+  gatekeeper_redirection_url = var.longhorn_gatekeeper_redirection_url
+  gatekeeper_discovery_url   = var.longhorn_gatekeeper_discovery_url
 }
 
 module "zelos_system_service_monitoring" {

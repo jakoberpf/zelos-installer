@@ -17,6 +17,8 @@ module "zelos_system_service_longhorn" {
     module.zelos_system_service_traefik
   ]
 
+  compartment                = "zelos-installer"
+  ingress_dns                = var.longhorn_ingress_dns
   gatekeeper_client_id       = var.longhorn_gatekeeper_client_id
   gatekeeper_client_secret   = var.longhorn_gatekeeper_client_secret
   gatekeeper_encryption_key  = var.longhorn_gatekeeper_encryption_key
@@ -31,6 +33,8 @@ module "zelos_system_service_monitoring" {
     module.zelos_system_service_traefik
   ]
 
+  compartment           = "zelos-installer"
+  ingress_dns           = var.grafana_ingress_dns
   grafana_adminPassword = var.grafana_adminPassword
   grafana_root_url      = var.grafana_root_url
   grafana_client_id     = var.grafana_client_id

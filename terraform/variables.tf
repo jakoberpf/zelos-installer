@@ -1,4 +1,4 @@
-# ChertManager
+# CertManager
 variable "cloudflare_tokens" {
   type = map(object({
     name   = string
@@ -10,6 +10,11 @@ variable "cloudflare_tokens" {
 }
 
 # Longhorn
+variable "longhorn_ingress_dns" {
+  type        = string
+  description = ""
+}
+
 variable "longhorn_gatekeeper_client_id" {
   type        = string
   description = ""
@@ -36,6 +41,11 @@ variable "longhorn_gatekeeper_discovery_url" {
 }
 
 # Monitoring - Grafana
+variable "grafana_ingress_dns" {
+  type        = string
+  description = ""
+}
+
 variable "grafana_adminPassword" {
   type        = string
   description = ""

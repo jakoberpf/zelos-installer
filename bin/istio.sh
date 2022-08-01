@@ -17,7 +17,7 @@ apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
   namespace: istio-system
-  name: artemis-istiocontrolplane
+  name: zelos-istiocontrolplane
 spec:
   hub: docker.io/querycapistio
   profile: demo

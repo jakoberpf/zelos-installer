@@ -1,5 +1,5 @@
-module "zelos_system_service_external_secrets" {
-  source = "/Users/jakoberpf/Code/jakoberpf/terraform/modules/kubernetes/external-secrets-deployment" # "jakoberpf/external-secrets-deployment/kubernetes"
+module "external_secrets" {
+  source = "jakoberpf/external-secrets-deployment/kubernetes"
 
   compartment = "zelos-installer"
 
@@ -7,19 +7,17 @@ module "zelos_system_service_external_secrets" {
   vault_token  = var.vault_token
 }
 
-module "zelos_system_service_cert_manager" {
+module "cert_manager" {
   source = "jakoberpf/certmanager-deployment/kubernetes"
 
-  # compartment = "athena-installer"
+  compartment = "zelos-installer"
 
-  deploy_manager    = true # TODO remove and make default
-  deploy_reflector  = true # TODO remove and make default
   cloudflare_tokens = var.cloudflare_tokens
 }
 
-module "zelos_system_service_longhorn" {
+module "longhorn" {
   depends_on = [
-    module.zelos_system_service_cert_manager
+    module.cert_manager
   ]
 
   source = "/Users/jakoberpf/Code/jakoberpf/terraform/modules/kubernetes/longhorn-deployment" # "jakoberpf/longhorn-deployment/kubernetes"
@@ -38,7 +36,7 @@ module "zelos_system_service_longhorn" {
   gatekeeper_discovery_url   = var.longhorn_gatekeeper_discovery_url
 }
 
-# module "zelos_system_service_flux" {
+# module "flux" {
 #   source = "jakoberpf/flux-deployment/kubernetes"
 
 #   github_owner    = var.github_owner

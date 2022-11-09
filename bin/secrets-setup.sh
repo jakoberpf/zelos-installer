@@ -13,13 +13,21 @@ mkdir -p .oci/keys
 rm -f .oci/config
 touch .oci/config
 
-# ... for kubespray
-oci_credentials=$(yq e -o=j -I=0 ".oci" kubespray/kubespray.yaml)
+# ... for kubernetes
+oci_credentials=$(yq e -o=j -I=0 ".oci" terraform/terragrunt.yaml)
 oci_user=$(echo "${oci_credentials}" | yq '.user_ocid')
 oci_fingerprint=$(echo "${oci_credentials}" | yq '.fingerprint')
 oci_tenancy=$(echo "${oci_credentials}" | yq '.tenancy_ocid')
 oci_region=$(echo "${oci_credentials}" | yq '.region')
-printf "[KUBESPRAY]\nuser=${oci_user}\nfingerprint=${oci_fingerprint}\ntenancy=${oci_tenancy}\nregion=${oci_region}\nkey_file=${PWD}/.oci/keys/kubespray.pem\n\n" >> .oci/config
-echo -e $(echo "${oci_credentials}" | yq '.private_key') > .oci/keys/kubespray.pem
+printf "[KUBENETES]\nuser=${oci_user}\nfingerprint=${oci_fingerprint}\ntenancy=${oci_tenancy}\nregion=${oci_region}\nkey_file=${PWD}/.oci/keys/kubernetes.pem\n\n" >> .oci/config
+echo -e $(echo "${oci_credentials}" | yq '.private_key') > .oci/keys/kubernetes.pem
 oci setup repair-file-permissions --file .oci/config
-oci setup repair-file-permissions --file .oci/keys/kubespray.pem
+oci setup repair-file-permissions --file .oci/keys/kubernetes.pem
+
+# Download config from bucket
+oci_credentials=$(yq e -o=j -I=0 ".oci" terraform/terragrunt.yaml)
+oci_compartment_ocid=$(echo "${oci_credentials}" | yq '.compartment_ocid')
+oci_namespace=$(oci os ns get --profile=KUBERNETES | jq '.data' | xargs)
+oci_bucket=$(oci os bucket list --profile=KUBERNETES --compartment-id="$oci_compartment_ocid" | jq '.data[] | select(.name=="zelos")')
+echo "$oci_bucket"
+# oci_last_modified=$(oci os object get --profile=KUBERNETES -ns "$oci_namespace" -bn zelos --name kubespray/admin.live.conf --file $config_file --force)

@@ -49,10 +49,6 @@ jobs:
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
 
-      - name: 'Setup tooling'
-        run: |
-          ./bin/tooling.sh
-
       - name: 'Setup terragrunt'
         uses: autero1/action-terragrunt@v1.2.0
         with:

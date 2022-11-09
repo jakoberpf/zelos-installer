@@ -20,6 +20,7 @@ oci setup repair-file-permissions --file .oci/config
 oci setup repair-file-permissions --file .oci/keys/kubernetes.pem
 
 # Download config from bucket
+mkdir -p .kube
 oci_credentials=$(yq e -o=j -I=0 ".oci" terraform/terragrunt.yaml)
 oci_compartment_ocid=$(echo "${oci_credentials}" | yq '.compartment_ocid')
 oci_namespace=$(oci os ns get --profile=KUBERNETES | jq '.data' | xargs)

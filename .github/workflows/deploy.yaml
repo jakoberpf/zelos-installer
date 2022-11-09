@@ -48,6 +48,7 @@ jobs:
           ./bin/secrets-setup.sh
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+          OCI_CLI_CONFIG_FILE: ${{ github.workspace }}/.oci/config
 
   terragrunt:
     name: 'Terragrunt'
@@ -88,6 +89,7 @@ jobs:
           ./bin/secrets-setup.sh
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+          OCI_CLI_CONFIG_FILE: ${{ github.workspace }}/.oci/config
 
       - name: 'Setup terragrunt'
         uses: autero1/action-terragrunt@v1.2.0

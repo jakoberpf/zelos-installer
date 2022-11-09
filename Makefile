@@ -1,4 +1,4 @@
-banner: # Typo: Allogator2 from https://manytools.org/hacker-tools/ascii-banner/
+banner:
 	@echo "################################################################"
 	@echo "##                                                            ##"
 	@echo "##    ::::::::: :::::::::: :::        ::::::::   ::::::::     ##"
@@ -12,20 +12,16 @@ banner: # Typo: Allogator2 from https://manytools.org/hacker-tools/ascii-banner/
 	@echo "################################################################"
 	@echo "                                                                "
 
-vault:
-	@echo "[vault] Getting configuration and secrets from Vault"
-	@./bin/vault.sh
-
-istio: vault
+istio:
 	@echo "[istio] Installing istio"
 	@./bin/istio.sh
 
-terraform: vault
+terraform:
 	@echo "[terraform] Creating cluster system services with terraform"
 	@./bin/terraform.sh
 
-deploy: vault istio terraform
+deploy: istio terraform
 
-destroy: vault
+destroy:
 	@echo "[bootstrap] Destroying cluster infrastructure"
 	@cd terraform && terraform destroy -var-file="variables.tfvars"

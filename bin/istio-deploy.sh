@@ -32,6 +32,11 @@ spec:
                 protocol: TCP
                 port: 15021
                 targetPort: 15021
+              - name: mx
+                protocol: TCP
+                port: 25
+                targetPort: 8025
+                nodePort: 30025
               - name: http2
                 protocol: TCP
                 port: 80
@@ -46,6 +51,10 @@ spec:
                 protocol: TCP
                 port: 31400
                 targetPort: 31400
+              - name: kubesphere
+                protocol: TCP
+                port: 31820
+                targetPort: 31820
               - name: tls
                 protocol: TCP
                 port: 15443

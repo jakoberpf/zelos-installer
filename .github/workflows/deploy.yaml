@@ -115,38 +115,32 @@ jobs:
         with:
           terraform_version: ${{ env.tf_version }}
 
-      # - name: 'Terragrunt init'
-      #   run: |
-      #     make terraform.init
-      #   env:
-      #     AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: 'Terragrunt init'
+        run: |
+          ./bin/terraform-init.sh
+        env:
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       # - name: 'Terragrunt validate'
       #   run: |
-      #     make terraform.validate
+      #     ./bin/terraform-validate.sh
       #   env:
       #     AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       # - name: 'Terragrunt plan'
       #   run: |
-      #    make terraform.plan
+      #    ./bin/terraform-plan.sh
       #   env:
       #     AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      # - name: 'Terragrunt apply (with force)'
+      # - name: 'Terragrunt apply'
       #   run: |
-      #     make terraform.apply.force
+      #     ./bin/terraform-apply.sh
       #   env:
       #     AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
       #     AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      # - name: 'Terragrunt post'
-      #   run: |
-      #     make terraform.post
-      #   env:
-      #     OCI_CLI_CONFIG_FILE: ${{ github.workspace }}/.oci/config
 
 # TODO trigger zelos-configuration action: https://blog.marcnuri.com/triggering-github-actions-across-different-repositories

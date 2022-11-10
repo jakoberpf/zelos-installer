@@ -48,6 +48,7 @@ jobs:
         run: |
           version=$(cat ./bin/istio-deploy.sh | grep ISTIO_VERSION | head -1 | cut -d "=" -f2 | xargs)
           curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${version} sh -
+          mv ./istio-1.13.1/bin/istioctl /bin
 
       - name: 'Decrypt secrets'
         run: |

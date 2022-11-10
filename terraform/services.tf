@@ -20,7 +20,7 @@ module "longhorn" {
     module.cert_manager
   ]
 
-  source = "/Users/jakoberpf/Code/jakoberpf/terraform/modules/kubernetes/longhorn-deployment" # "jakoberpf/longhorn-deployment/kubernetes"
+  source = "jakoberpf/longhorn-deployment/kubernetes"
 
   compartment = "zelos-installer"
 

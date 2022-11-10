@@ -4,4 +4,4 @@ cd $GIT_ROOT
 
 # Run terraform apply
 cd $GIT_ROOT/terraform
-terragrunt init -backend-config=backend.conf -upgrade
+terragrunt init -upgrade

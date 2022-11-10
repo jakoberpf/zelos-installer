@@ -137,11 +137,12 @@ jobs:
           AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      # - name: 'Terragrunt apply'
-      #   run: |
-      #     ./bin/terraform-apply.sh
-      #   env:
-      #     AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: 'Terragrunt apply'
+        run: |
+          ./bin/terraform-apply.sh
+        env:
+          KUBECONFIG: ${{ github.workspace }}/.kube/admin.live.conf
+          AWS_ACCESS_KEY_ID:  ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY:  ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
 # TODO trigger zelos-configuration action: https://blog.marcnuri.com/triggering-github-actions-across-different-repositories

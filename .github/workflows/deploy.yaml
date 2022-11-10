@@ -46,7 +46,7 @@ jobs:
 
       - name: 'Install istio-cli'
         run: |
-          version=$(cat ./bin/istio-deploy.sh | grep ISTIO_VERSION | head -1 | cut -d "=" -f2)
+          version=$(cat ./bin/istio-deploy.sh | grep ISTIO_VERSION | head -1 | cut -d "=" -f2 | xargs)
           curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${version} sh -
 
       - name: 'Decrypt secrets'

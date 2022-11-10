@@ -6,9 +6,11 @@ on:
       - main
 
 env:
+
   tf_version: '1.1.8'
   tg_version: '0.36.3'
   tf_working_dir: './terraform'
+  istio_version: '1.15.3'
 
 jobs:
   istio:
@@ -41,6 +43,11 @@ jobs:
           exec -l $SHELL
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+      - name: 'Install istio-cli'
+        run: |
+          version=$(cat ./bin/istio-deploy.sh | grep ISTIO_VERSION | head -1 | cut -d "=" -f2)
+          curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${version} sh -
 
       - name: 'Decrypt secrets'
         run: |

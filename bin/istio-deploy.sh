@@ -2,7 +2,9 @@
 GIT_ROOT=$(git rev-parse --show-toplevel)
 cd $GIT_ROOT
 
-istioctl operator init --hub=docker.io/querycapistio --tag=1.13.1 # get version from https://github.com/querycap/istio
+ISTIO_VERSION="1.13.1"
+
+istioctl operator init --hub=docker.io/querycapistio --tag=$ISTIO_VERSION # get version from https://github.com/querycap/istio
 
 ISTIO_NAMESPACE=istio-system
 if [ ! "$(kubectl get namespaces -o json | jq -r ".items[].metadata.name | select (. == \"$ISTIO_NAMESPACE\")")" == "$ISTIO_NAMESPACE" ]; then

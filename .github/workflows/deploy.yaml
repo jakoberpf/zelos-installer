@@ -46,6 +46,8 @@ jobs:
         run: |
           ./bin/secrets-decrypt.sh
           ./bin/secrets-setup.sh
+          ls .kube
+          ls .oci
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
           OCI_CLI_CONFIG_FILE: ${{ github.workspace }}/.oci/config

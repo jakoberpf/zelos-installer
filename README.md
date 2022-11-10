@@ -1,7 +1,7 @@
 # zelos-installer
 
-This porject is the second stage of the zelos kubernetes cluster.
+This project is the second stage of the zelos kubernetes cluster.
 
-- zelos-bootstrap
-- ***zelos-installer***
-- zelos-configuration
+- [zelos-bootstrap](https://github.com/jakoberpf/zelos-bootstrap)
+- [***zelos-installer***](https://github.com/jakoberpf/zelos-installer)
+- [zelos-configuration](https://github.com/jakoberpf/zelos-configuration)

@@ -65,16 +65,16 @@ provider "flux" {}
 provider "kubectl" {}
 
 provider "kustomization" {
-  kubeconfig_path = "${path.root}/../.kube/admin.${var.stage}.conf"
+  kubeconfig_path = "${get_terragrunt_dir()}/../.kube/admin.live.conf"
 }
 
 provider "kubernetes" {
-  config_path = "${path.root}/../.kube/admin.${var.stage}.conf"
+  config_path = "${get_terragrunt_dir()}/../.kube/admin.live.conf"
 }
 
 provider "helm" {
   kubernetes {
-    config_path = "${path.root}/../.kube/admin.${var.stage}.conf"
+    config_path = "${get_terragrunt_dir()}/../.kube/admin.live.conf"
   }
 }
 

@@ -27,7 +27,8 @@ module "longhorn" {
   aws_access_key_id     = var.longhorn_aws_access_key_id
   aws_secret_access_key = var.longhorn_aws_secret_access_key
 
-  ingress_dns = var.longhorn_ingress_dns
+  ingress_dns  = var.longhorn_ingress_dns
+  ingress_type = "istio"
 
   gatekeeper_client_id       = var.longhorn_gatekeeper_client_id
   gatekeeper_client_secret   = var.longhorn_gatekeeper_client_secret

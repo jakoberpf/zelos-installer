@@ -57,10 +57,6 @@ spec:
                 protocol: TCP
                 port: 31400
                 targetPort: 31400
-              - name: kubesphere
-                protocol: TCP
-                port: 31820
-                targetPort: 31820
               - name: tls
                 protocol: TCP
                 port: 15443

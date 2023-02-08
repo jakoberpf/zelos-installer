@@ -53,6 +53,7 @@ spec:
                 protocol: TCP
                 port: 8883
                 targetPort: 8883
+                nodePort: 38883
               - name: tcp
                 protocol: TCP
                 port: 31400

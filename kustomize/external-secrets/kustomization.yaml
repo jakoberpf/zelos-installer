@@ -1,0 +1,11 @@
+namespace: external-secrets
+resources:
+  - namespace.yaml
+  - vault-secret.yaml
+  - vault-store.yaml
+helmCharts:
+  - name: external-secrets
+    repo: https://charts.external-secrets.io
+    version: 0.7.2
+    releaseName: external-secrets
+    valuesFile: values.yaml

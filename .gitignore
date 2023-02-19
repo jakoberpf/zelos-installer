@@ -37,3 +37,5 @@ override.tf.json
 *.oci
 *.pem
 *.kube
+*secret.yaml
+charts

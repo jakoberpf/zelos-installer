@@ -11,7 +11,6 @@ env:
   tf_version: '1.1.8'
   tg_version: '0.36.3'
   tf_working_dir: './terraform'
-  istio_version: '1.15.3'
 
 jobs:
   istio:
@@ -49,7 +48,7 @@ jobs:
         run: |
           version=$(cat ./bin/istio-deploy.sh | grep ISTIO_VERSION | head -1 | cut -d "=" -f2 | xargs)
           curl -L https://istio.io/downloadIstio | ISTIO_VERSION=${version} sh -
-          sudo mv ./istio-1.13.1/bin/istioctl /bin
+          sudo mv ./istio-${version}/bin/istioctl /bin
 
       - name: 'Decrypt secrets'
         run: |
@@ -62,6 +61,51 @@ jobs:
       - name: 'Istio deploy'
         run: |
           ./bin/istio-deploy.sh
+        env:
+          KUBECONFIG: ${{ github.workspace }}/.kube/admin.live.conf
+
+  monitoring:
+    name: 'Monitoring'
+    runs-on: ubuntu-latest
+    concurrency: istio
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v1
+
+      - name: 'Install sops'
+        run: |
+          curl -O -L -C - https://github.com/mozilla/sops/releases/download/v3.7.3/sops-v3.7.3.linux
+          sudo mv sops-v3.7.3.linux /usr/bin/sops
+          sudo chmod +x /usr/bin/sops
+
+      - name: 'Install age'
+        run: |
+          curl -O -L -C - https://github.com/FiloSottile/age/releases/download/v1.0.0/age-v1.0.0-linux-amd64.tar.gz
+          tar -zxvf age-v1.0.0-linux-amd64.tar.gz
+          sudo mv age/age /usr/bin/age
+          sudo chmod +x /usr/bin/age
+
+      - name: 'Install oci-cli'
+        run: |
+          curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
+          chmod +x install.sh
+          ./install.sh --accept-all-defaults
+          echo "::add-path::/home/runner/bin"
+          exec -l $SHELL
+        env:
+          ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+      - name: 'Decrypt secrets'
+        run: |
+          ./bin/secrets-decrypt.sh
+          ./bin/secrets-setup.sh
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+          OCI_CLI_CONFIG_FILE: ${{ github.workspace }}/.oci/config
+
+      - name: 'Monitoring deploy'
+        run: |
+          ./bin/prometheus-deploy.sh
         env:
           KUBECONFIG: ${{ github.workspace }}/.kube/admin.live.conf
 

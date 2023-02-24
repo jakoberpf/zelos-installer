@@ -4,3 +4,5 @@ cd $GIT_ROOT
 
 sops --decrypt --input-type yaml --output-type yaml terraform/terragrunt.yaml.enc > terraform/terragrunt.yaml
 sops --decrypt terraform/variables.tfvars.enc > terraform/variables.tfvars
+
+sops --decrypt configs/prometheus-stack-values-secret.yaml.enc > configs/prometheus-stack-values-secret.yaml

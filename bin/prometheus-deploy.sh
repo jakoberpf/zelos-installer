@@ -33,8 +33,14 @@ fi
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 
-helm upgrade --install prometheus-stack prometheus-community/kube-prometheus-stack -f configs/prometheus-stack-values.yaml -n $PROMETHEUS_NAMESPACE
-helm upgrade --install prometheus-adapter prometheus-community/prometheus-adapter -f configs/prometheus-adapter-values.yaml -n $PROMETHEUS_NAMESPACE
+helm upgrade --install prometheus-stack prometheus-community/kube-prometheus-stack \
+    -f configs/prometheus-stack-values.yaml \
+    -f configs/prometheus-stack-values-secret.yaml \
+    -n $PROMETHEUS_NAMESPACE
+
+helm upgrade --install prometheus-adapter prometheus-community/prometheus-adapter \
+    -f configs/prometheus-adapter-values.yaml \
+    -n $PROMETHEUS_NAMESPACE
 
 kubectl apply -f configs/prometheus-stack-istio.yaml -n $PROMETHEUS_NAMESPACE
 

@@ -64,10 +64,10 @@ jobs:
         env:
           KUBECONFIG: ${{ github.workspace }}/.kube/admin.live.conf
 
-  monitoring:
-    name: 'Monitoring'
+  prometheus:
+    name: 'Prometheus'
     runs-on: ubuntu-latest
-    concurrency: istio
+    concurrency: prometheus
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v1
@@ -103,7 +103,7 @@ jobs:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
           OCI_CLI_CONFIG_FILE: ${{ github.workspace }}/.oci/config
 
-      - name: 'Monitoring deploy'
+      - name: 'Prometheus deploy'
         run: |
           ./bin/prometheus-deploy.sh
         env:
@@ -115,6 +115,7 @@ jobs:
     concurrency: terragrunt
     needs:
       - istio
+      - prometheus
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v1

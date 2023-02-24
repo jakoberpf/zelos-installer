@@ -36,6 +36,8 @@ helm repo update
 helm upgrade --install prometheus-stack prometheus-community/kube-prometheus-stack -f configs/prometheus-stack-values.yaml -n $PROMETHEUS_NAMESPACE
 helm upgrade --install prometheus-adapter prometheus-community/prometheus-adapter -f configs/prometheus-adapter-values.yaml -n $PROMETHEUS_NAMESPACE
 
+kubectl apply -f configs/prometheus-stack-istio.yaml -n $PROMETHEUS_NAMESPACE
+
 # https://medium.com/@akashjoffical08/monitor-uptime-of-endpoints-in-k8s-using-blackbox-exporter-f80166a328e9
 # - name: prometheus-blackbox-exporter
 #   repo: https://prometheus-community.github.io/helm-charts

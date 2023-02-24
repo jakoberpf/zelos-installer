@@ -1,0 +1,65 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: prometheus-stack-grafana
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - grafana.zelos.k8s.erpf.de
+      tls:
+        httpsRedirect: true
+    - port:
+        number: 443
+        name: https
+        protocol: HTTPS
+      tls:
+        mode: "SIMPLE"
+        credentialName: prometheus-stack-grafana-tls
+      hosts:
+        - grafana.zelos.k8s.erpf.de
+
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: prometheus-stack-grafana
+spec:
+  hosts:
+    - grafana.zelos.k8s.erpf.de
+  gateways:
+    - prometheus-stack-grafana
+  http:
+    - match:
+      - uri:
+          prefix: /
+      route:
+      - destination:
+          port:
+            number: 80
+          host: prometheus-stack-grafana
+
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: prometheus-stack-grafana
+spec:
+  secretName: prometheus-stack-grafana-tls
+  issuerRef:
+    name: "cloudflare-letsencrypt-staging"
+    kind: "ClusterIssuer"
+  dnsNames:
+    - "grafana.zelos.k8s.erpf.de"
+  secretTemplate:
+    annotations:
+      reflector.v1.k8s.emberstack.com/reflection-allowed: "true"  
+      reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: "istio-system"
+      reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+      reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: "istio-system"

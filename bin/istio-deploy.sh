@@ -48,11 +48,11 @@ spec:
                 port: 443
                 targetPort: 8443
                 nodePort: 443
-              # - name: netmaker-mqtt
-              #   protocol: TCP
-              #   port: 8883
-              #   targetPort: 8883
-              #   nodePort: 8883
+              - name: mqtt
+                protocol: TCP
+                port: 8883
+                targetPort: 8883
+                nodePort: 8883
               - name: tcp
                 protocol: TCP
                 port: 31400

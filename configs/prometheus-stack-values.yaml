@@ -7,7 +7,7 @@ grafana:
       oauth_auto_login: true
       disable_signout_menu: true
     auth.basic:
-      enabled: false
+      enabled: true
     auth.generic_oauth:
       enabled: true
       name: "Keycloak"

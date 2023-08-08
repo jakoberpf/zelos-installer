@@ -1,5 +1,6 @@
 module "external_secrets" {
-  source             = "jakoberpf/external-secrets-deployment/kubernetes"
+  source = "jakoberpf/external-secrets-deployment/kubernetes"
+
   helm_chart_version = "0.7.2"
   compartment        = "zelos-installer"
   vault_server       = var.vault_server
@@ -7,7 +8,8 @@ module "external_secrets" {
 }
 
 module "cert_manager" {
-  source                       = "jakoberpf/certmanager-deployment/kubernetes"
+  source = "jakoberpf/certmanager-deployment/kubernetes"
+
   helm_chart_version_manager   = "1.11.0"
   helm_chart_version_reflector = "6.1.47"
   compartment                  = "zelos-installer"
@@ -15,10 +17,8 @@ module "cert_manager" {
 }
 
 module "longhorn" {
-  depends_on = [
-    module.cert_manager
-  ]
-  source                     = "jakoberpf/longhorn-deployment/kubernetes"
+  source = "jakoberpf/longhorn-deployment/kubernetes"
+
   compartment                = "zelos-installer"
   helm_chart_version         = "1.4.0"
   aws_access_key_id          = var.longhorn_aws_access_key_id
@@ -30,6 +30,16 @@ module "longhorn" {
   gatekeeper_encryption_key  = var.longhorn_gatekeeper_encryption_key
   gatekeeper_redirection_url = var.longhorn_gatekeeper_redirection_url
   gatekeeper_discovery_url   = var.longhorn_gatekeeper_discovery_url
+
+  depends_on = [
+    module.cert_manager
+  ]
+}
+
+module "argo" {
+  source = "jakoberpf/argo-deployment/kubernetes"
+
+  compartment = "zelos-installer"
 }
 
 # module "flux" {

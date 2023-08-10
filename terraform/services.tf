@@ -23,6 +23,7 @@ module "longhorn" {
   helm_chart_version         = "1.4.0"
   aws_access_key_id          = var.longhorn_aws_access_key_id
   aws_secret_access_key      = var.longhorn_aws_secret_access_key
+  ingress_enabled            = true
   ingress_dns                = var.longhorn_ingress_dns
   ingress_type               = "istio"
   gatekeeper_client_id       = var.longhorn_gatekeeper_client_id
